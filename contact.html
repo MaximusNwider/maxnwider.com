@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact — Maximus Nwider</title>
+    <meta
+      name="description"
+      content="Contact Maximus Nwider — email, socials, and a simple form."
+    />
+    <meta name="theme-color" content="#0b1020" />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      /* ===== Modern Palette & Tokens (kept consistent across pages) ===== */
+      :root {
+        --bg: #050814;
+        --bg-2: #0b1120;
+        --text: #e5eefb;
+        --muted: #94a3b8;
+        --brand: #7c3aed;
+        --brand-2: #22d3ee;
+        --brand-3: #06b6d4;
+        --ring: rgba(124, 58, 237, 0.35);
+        --radius: 18px;
+        --gap: 1.1rem;
+        --shadow-lg: 0 20px 60px rgba(2, 6, 23, 0.55);
+        --shadow-sm: 0 8px 24px rgba(2, 6, 23, 0.35);
+      }
+
+      /* ===== Base ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans";
+        background: radial-gradient(
+            1000px 600px at 10% -10%,
+            rgba(124, 58, 237, 0.22),
+            transparent
+          ),
+          radial-gradient(
+            1000px 500px at 110% 10%,
+            rgba(34, 211, 238, 0.18),
+            transparent
+          ),
+          linear-gradient(180deg, #04060f, #0a0f1e 20%, #050814 60%);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        width: min(1200px, 92vw);
+        margin-inline: auto;
+      }
+
+      /* Accent ring utility */
+      .ringed {
+        position: relative;
+      }
+      .ringed::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask: linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        padding: 1px;
+        pointer-events: none;
+        opacity: 0.75;
+      }
+
+      /* ===== Header / Nav ===== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 0;
+        backdrop-filter: saturate(1.1) blur(10px);
+        background: linear-gradient(
+          180deg,
+          rgba(11, 17, 32, 0.55),
+          rgba(11, 17, 32, 0.35)
+        );
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .logo {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        background: conic-gradient(
+          from 120deg,
+          var(--brand),
+          var(--brand-2),
+          var(--brand)
+        );
+        box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.15), var(--shadow-sm);
+      }
+      .nav ul {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav a {
+        color: var(--muted);
+        font-weight: 600;
+        padding: 0.45rem 0.7rem;
+        border-radius: 12px;
+        transition: color 0.2s, background 0.2s, transform 0.2s;
+      }
+      .nav a:hover,
+      .nav a[aria-current="page"] {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .nav a.cta {
+        color: #001;
+        background: linear-gradient(135deg, var(--brand-2), var(--brand));
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow-sm);
+      }
+      .nav a.cta:hover {
+        transform: translateY(-1px);
+      }
+
+      /* ===== Typography ===== */
+      .eyebrow {
+        color: var(--brand-2);
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      h1 {
+        font-size: clamp(2rem, 3vw + 1rem, 3rem);
+        line-height: 1.1;
+        margin: 0.6rem 0 1rem;
+      }
+      h2 {
+        font-size: clamp(1.25rem, 1vw + 1rem, 1.7rem);
+        margin: 0 0 0.8rem;
+      }
+      .lead {
+        color: #c9d6ea;
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* ===== Layout ===== */
+      main {
+        padding-top: 2rem;
+      }
+      section {
+        padding: 3.2rem 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--gap);
+      }
+      @media (min-width: 900px) {
+        .col-7 {
+          grid-column: span 7;
+        }
+        .col-5 {
+          grid-column: span 5;
+        }
+        .col-6 {
+          grid-column: span 6;
+        }
+      }
+
+      /* Panels */
+      .panel {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: var(--radius);
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Form */
+      form {
+        margin-top: 0.3rem;
+      }
+      label {
+        display: block;
+        margin: 0.55rem 0 0.35rem;
+      }
+      .field {
+        position: relative;
+      }
+      .input,
+      textarea {
+        width: 100%;
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(11, 17, 32, 0.6);
+        color: var(--text);
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+      .input:focus,
+      textarea:focus {
+        border-color: rgba(124, 58, 237, 0.6);
+        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.14);
+      }
+      textarea {
+        min-height: 160px;
+        resize: vertical;
+      }
+
+      .row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.7rem 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.27);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        color: var(--text);
+        cursor: pointer;
+      }
+      .btn:hover {
+        border-color: rgba(124, 58, 237, 0.6);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12) inset;
+      }
+      .btn--primary {
+        color: #001;
+        background: linear-gradient(135deg, var(--brand-2), var(--brand));
+      }
+      .help {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      /* Contact list */
+      .contact-card {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 0.8rem;
+        align-items: center;
+        padding: 0.6rem 0;
+        border-top: 1px dashed rgba(148, 163, 184, 0.2);
+      }
+      .contact-card:first-child {
+        border-top: none;
+      }
+      .icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: conic-gradient(
+          from 120deg,
+          var(--brand),
+          var(--brand-2),
+          var(--brand)
+        );
+        box-shadow: 0 6px 16px rgba(2, 6, 23, 0.5);
+      }
+
+      /* Footer & Focus */
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 2rem 0 3rem;
+        color: var(--muted);
+      }
+      :focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+        border-radius: 10px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  <script type="module" src="/assets/js/main.js" defer></script>
+</head>
+  <body>
+  <header data-include></header>
+    <header>
+      <div class="container nav" role="navigation" aria-label="Primary">
+        <a href="index.html" class="brand" aria-label="Home">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Maximus&nbsp;Nwider</span>
+        </a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li>
+            <a href="contact.html" class="cta" aria-current="page">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="container">
+      <section aria-label="Contact intro">
+        <div class="panel ringed">
+          <div class="eyebrow">Contact</div>
+          <h1>Say <span class="gradient-text">hello</span></h1>
+          <p class="help">
+            I’m open to collaborations, internships, research projects, and
+            interesting debugging sessions.
+          </p>
+        </div>
+      </section>
+
+      <section aria-label="Contact content">
+        <div class="grid">
+          <!-- Form -->
+          <article class="panel col-7" aria-labelledby="contact-form-title">
+            <h2 id="contact-form-title">Send a message</h2>
+            <form id="contact-form" action="#" method="post" novalidate>
+              <div class="row">
+                <div style="flex: 1; min-width: 240px">
+                  <label for="name">Name</label>
+                  <input
+                    class="input"
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Ada Lovelace"
+                    required
+                  />
+                </div>
+                <div style="flex: 1; min-width: 240px">
+                  <label for="email">Email</label>
+                  <input
+                    class="input"
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <label for="subject">Subject</label>
+              <input
+                class="input"
+                id="subject"
+                name="subject"
+                type="text"
+                placeholder="Project idea, internship, question…"
+              />
+
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Write a short note…"
+                required
+              ></textarea>
+
+              <!-- Honeypot -->
+              <div aria-hidden="true" style="position: absolute; left: -9999px">
+                <label for="company">Company</label>
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="row" style="margin-top: 0.9rem">
+                <button class="btn btn--primary" type="submit">Send</button>
+                <button class="btn" type="reset">Reset</button>
+              </div>
+              <p
+                id="form-status"
+                class="help"
+                role="status"
+                aria-live="polite"
+                style="margin-top: 0.6rem"
+              ></p>
+            </form>
+          </article>
+
+          <!-- Direct links -->
+          <aside class="panel col-5" aria-label="Direct contact">
+            <h2>Direct</h2>
+            <div class="contact-card">
+              <div class="icon" aria-hidden="true"></div>
+              <div>
+                <div>Email</div>
+                <a href="mailto:maxnwider@gmail.com">maxnwider@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="icon" aria-hidden="true"></div>
+              <div>
+                <div>LinkedIn</div>
+                <a
+                  href="https://www.linkedin.com/"
+                  target="_blank"
+                  rel="noopener"
+                  >Connect</a
+                >
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="icon" aria-hidden="true"></div>
+              <div>
+                <div>GitHub</div>
+                <a href="https://github.com/" target="_blank" rel="noopener"
+                  >@yourhandle</a
+                >
+              </div>
+            </div>
+            <p class="help" style="margin-top: 0.6rem">
+              Prefer email for first contact. I’ll reply if it’s a fit.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small
+          >© <span id="y">2025</span> Maximus Nwider. All rights
+          reserved.</small
+        >
+      </div>
+    </footer>
+
+    <script>
+      const form = document.getElementById("contact-form");
+      const statusEl = document.getElementById("form-status");
+      function mailtoHref(fields) {
+        const to = "maxnwider@gmail.com";
+        const subject = encodeURIComponent(
+          fields.subject || "Portfolio contact"
+        );
+        const body = encodeURIComponent(
+          `From: ${fields.name} <${fields.email}>\n\n${fields.message}`
+        );
+        return `mailto:${to}?subject=${subject}&body=${body}`;
+      }
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        if ((data.company || "").trim() !== "") {
+          statusEl.textContent = "Spam detected.";
+          return;
+        }
+        if (!data.name || !data.email || !data.message) {
+          statusEl.textContent = "Please fill in name, email, and a message.";
+          return;
+        }
+        window.location.href = mailtoHref(data);
+        statusEl.textContent = "Opening your email client…";
+      });
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+    <footer data-include></footer>
+</body>
+</html>

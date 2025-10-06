@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About — Maximus Nwider</title>
+    <meta
+      name="description"
+      content="About Maximus Nwider — hardware, firmware, and mixed-signal projects from silicon to software."
+    />
+    <meta name="theme-color" content="#0b1020" />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      /* ===== Modern Palette & Tokens (match index) ===== */
+      :root {
+        --bg: #050814;
+        --bg-2: #0b1120;
+        --text: #e5eefb;
+        --muted: #94a3b8;
+        --brand: #7c3aed;
+        --brand-2: #22d3ee;
+        --brand-3: #06b6d4;
+        --ring: rgba(124, 58, 237, 0.35);
+        --radius: 18px;
+        --gap: 1.1rem;
+        --shadow-lg: 0 20px 60px rgba(2, 6, 23, 0.55);
+        --shadow-sm: 0 8px 24px rgba(2, 6, 23, 0.35);
+      }
+
+      /* ===== Base ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans";
+        background: radial-gradient(
+            1000px 600px at 10% -10%,
+            rgba(124, 58, 237, 0.22),
+            transparent
+          ),
+          radial-gradient(
+            1000px 500px at 110% 10%,
+            rgba(34, 211, 238, 0.18),
+            transparent
+          ),
+          linear-gradient(180deg, #04060f, #0a0f1e 20%, #050814 60%);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+        border-radius: 14px;
+      }
+      .container {
+        width: min(1200px, 92vw);
+        margin-inline: auto;
+      }
+
+      /* Accent ring utility */
+      .ringed {
+        position: relative;
+      }
+      .ringed::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask: linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        padding: 1px;
+        pointer-events: none;
+        opacity: 0.75;
+      }
+
+      /* ===== Header / Nav ===== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 0;
+        backdrop-filter: saturate(1.1) blur(10px);
+        background: linear-gradient(
+          180deg,
+          rgba(11, 17, 32, 0.55),
+          rgba(11, 17, 32, 0.35)
+        );
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .logo {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        background: conic-gradient(
+          from 120deg,
+          var(--brand),
+          var(--brand-2),
+          var(--brand)
+        );
+        box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.15), var(--shadow-sm);
+      }
+      .nav ul {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav a {
+        color: var(--muted);
+        font-weight: 600;
+        padding: 0.45rem 0.7rem;
+        border-radius: 12px;
+        transition: color 0.2s, background 0.2s, transform 0.2s;
+      }
+      .nav a:hover,
+      .nav a[aria-current="page"] {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .nav a.cta {
+        color: #001;
+        background: linear-gradient(135deg, var(--brand-2), var(--brand));
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow-sm);
+      }
+      .nav a.cta:hover {
+        transform: translateY(-1px);
+      }
+
+      /* ===== Typography ===== */
+      .eyebrow {
+        color: var(--brand-2);
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      h1 {
+        font-size: clamp(2rem, 3vw + 1rem, 3rem);
+        line-height: 1.1;
+        margin: 0.6rem 0 1rem;
+      }
+      h2 {
+        font-size: clamp(1.25rem, 1vw + 1rem, 1.7rem);
+        margin: 0 0 0.8rem;
+      }
+      .lead {
+        color: #c9d6ea;
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* ===== Layout ===== */
+      main {
+        padding-top: 2rem;
+      }
+      section {
+        padding: 3.2rem 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--gap);
+      }
+      @media (min-width: 900px) {
+        .col-7 {
+          grid-column: span 7;
+        }
+        .col-5 {
+          grid-column: span 5;
+        }
+        .col-6 {
+          grid-column: span 6;
+        }
+      }
+
+      /* Panels / Cards */
+      .panel {
+        grid-column: span 12;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: var(--radius);
+        padding: 1.2rem;
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Chips / Pills */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        font-size: 0.8rem;
+        color: #cfe4ff;
+        background: rgba(11, 17, 32, 0.5);
+        backdrop-filter: saturate(1.2) blur(2px);
+      }
+      .pill::before {
+        content: "";
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        opacity: 0.9;
+      }
+
+      /* Key-value list */
+      .kv {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 0.6rem;
+      }
+      .kv dt {
+        color: #cbd5e1;
+      }
+      .kv dd {
+        margin: 0;
+        color: var(--text);
+      }
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+        padding-left: 1.25rem;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0.35rem;
+        top: 0.2rem;
+        bottom: 0.2rem;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0.6),
+          rgba(34, 211, 238, 0.45)
+        );
+        border-radius: 2px;
+      }
+      .t-item {
+        position: relative;
+        margin: 0 0 1rem 0;
+      }
+      .t-item::before {
+        content: "";
+        position: absolute;
+        left: -0.15rem;
+        top: 0.35rem;
+        width: 9px;
+        height: 9px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        border-radius: 999px;
+        box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.12);
+      }
+
+      /* Rows / Links / Buttons */
+      .row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .links {
+        display: flex;
+        gap: 0.7rem;
+        align-items: center;
+      }
+      .button {
+        display: inline-block;
+        padding: 0.7rem 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        color: var(--text);
+      }
+      .button--primary {
+        color: #001;
+        background: linear-gradient(135deg, var(--brand-2), var(--brand));
+      }
+
+      /* Lists */
+      .list {
+        margin: 0.4rem 0 0;
+        padding: 0 1rem;
+        color: #cbd5e1;
+      }
+      .list li {
+        margin: 0.3rem 0;
+      }
+
+      /* Footer & Focus */
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 2rem 0 3rem;
+        color: var(--muted);
+      }
+      :focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+        border-radius: 10px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  <script type="module" src="/assets/js/main.js" defer></script>
+</head>
+  <body>
+  <header data-include></header>
+    <!-- Header -->
+    <header>
+      <div class="container nav" role="navigation" aria-label="Primary">
+        <a href="index.html" class="brand" aria-label="Home">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Maximus&nbsp;Nwider</span>
+        </a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" aria-current="page">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html" class="cta">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Intro -->
+      <section aria-label="About intro">
+        <div class="grid">
+          <article class="panel ringed col-7">
+            <div class="eyebrow">About</div>
+            <h1>
+              Building from <span class="gradient-text">atoms to apps</span>.
+            </h1>
+            <p class="lead">
+              I design and build across RF/EM, embedded systems, and VLSI. My
+              work style is analysis-first and measurement-driven: model it,
+              prototype it, validate it, then document it so others can
+              reproduce the results.
+            </p>
+            <p class="lead" style="margin-top: 0.5rem">
+              Recent projects include a wearable allergy smartwatch (sensors,
+              BLE, 4-layer PCB), FinFET SRAM sense-amp studies (PTM-MG, HSPICE,
+              Python automation), a corrugated horn with a matched feed network
+              (HFSS + range measurements), and a small data-viz toolkit for lab
+              pipelines.
+            </p>
+            <div class="row" style="margin-top: 0.6rem">
+              <div class="links">
+                <a class="button" href="resume.pdf" download>Download Resume</a>
+                <span aria-hidden>·</span>
+                <a class="button" href="mailto:maxnwider@gmail.com">Email</a>
+              </div>
+              <div class="links">
+                <a href="https://github.com/" target="_blank" rel="noopener"
+                  >GitHub</a
+                >
+                <a
+                  href="https://www.linkedin.com/"
+                  target="_blank"
+                  rel="noopener"
+                  >LinkedIn</a
+                >
+              </div>
+            </div>
+          </article>
+          <aside class="panel col-5" aria-label="Profile image">
+            <img
+              src="/assets/profile-placeholder.jpg"
+              alt="Profile portrait placeholder"
+            />
+            <p style="color: var(--muted); margin-top: 0.6rem">
+              Swap for a portrait or a collage of the smartwatch, horn, SRAM
+              plots, and PMIC boards.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Quick facts -->
+      <section aria-label="Quick facts">
+        <div class="grid">
+          <article class="panel col-6">
+            <h2>Focus Areas</h2>
+            <p>
+              <span class="pill">Embedded Firmware</span>
+              <span class="pill">RF / Antennas</span>
+              <span class="pill">VLSI · Sense-Amps</span>
+              <span class="pill">PCB Design</span>
+              <span class="pill">Signal Processing</span>
+              <span class="pill">Test & Automation</span>
+            </p>
+          </article>
+          <article class="panel col-6">
+            <h2>Tooling</h2>
+            <p>
+              <span class="pill">Cadence Virtuoso</span>
+              <span class="pill">HFSS / ADS</span>
+              <span class="pill">Altium / KiCad</span>
+              <span class="pill">HSPICE / LTspice</span>
+              <span class="pill">MATLAB / Python</span>
+              <span class="pill">C/C++ · VHDL</span>
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Key details -->
+      <section aria-label="Key details">
+        <div class="grid">
+          <article class="panel col-6" aria-labelledby="details">
+            <h2 id="details">Details</h2>
+            <dl class="kv">
+              <dt>Location</dt>
+              <dd>TN, USA (UTC−5/−6)</dd>
+              <dt>Availability</dt>
+              <dd>Internships & collaborations</dd>
+              <dt>Email</dt>
+              <dd>
+                <a href="mailto:maxnwider@gmail.com">maxnwider@gmail.com</a>
+              </dd>
+              <dt>Interests</dt>
+              <dd>Wearables, RF front-ends, low-power ICs</dd>
+            </dl>
+          </article>
+          <article class="panel col-6" aria-labelledby="highlights">
+            <h2 id="highlights">Highlights</h2>
+            <ul class="list">
+              <li>
+                Wearable allergy smartwatch — sensors, firmware (C), BLE,
+                4-layer PCB.
+              </li>
+              <li>
+                FinFET SRAM sense-amp exploration — 7/14/20 nm PTM-MG, HSPICE +
+                Python.
+              </li>
+              <li>
+                Corrugated horn & feed network — HFSS scripting; sim vs. range
+                measurements.
+              </li>
+              <li>
+                Low-noise PMIC for wearables — multi-rail power, layout &
+                validation.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- How I work -->
+      <section aria-label="Approach">
+        <div class="panel ringed">
+          <h2>How I work</h2>
+          <ul class="list">
+            <li>
+              <strong>Scope & Model.</strong> Clarify constraints and success
+              criteria; build quick models.
+            </li>
+            <li>
+              <strong>Prototype.</strong> Minimal, testable builds (PCB,
+              firmware, HFSS/HSPICE decks).
+            </li>
+            <li>
+              <strong>Validate.</strong> Bench scripts, logs, plots; compare to
+              simulation.
+            </li>
+            <li>
+              <strong>Document.</strong> Reproducible notes, CAD/GERBERs,
+              scripts, and read-mes.
+            </li>
+          </ul>
+          <div class="links" style="margin-top: 0.8rem">
+            <a class="button button--primary" href="projects.html"
+              >See projects</a
+            >
+            <a class="button" href="services.html">Process & services</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Timeline -->
+      <section aria-label="Experience timeline">
+        <div class="panel">
+          <h2>Experience</h2>
+          <div class="timeline" role="list">
+            <div class="t-item" role="listitem">
+              <strong>Mixed-Signal / RF Projects</strong> — 2024–2025
+              <div style="color: var(--muted)">
+                Independent & academic projects in EM, VLSI, and embedded
+                systems.
+              </div>
+            </div>
+            <div class="t-item" role="listitem">
+              <strong>University of Tennessee</strong> — B.S. EE (in progress)
+              <div style="color: var(--muted)">
+                Advanced electives in semiconductor physics, SoC, analog/VLSI.
+              </div>
+            </div>
+            <div class="t-item" role="listitem">
+              <strong>Industry Internships</strong> — 2023–2025
+              <div style="color: var(--muted)">
+                Hands-on test, validation, and design enablement across hardware
+                teams.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Writing -->
+      <section aria-label="Writing">
+        <div class="panel">
+          <h2>Writing & Notes</h2>
+          <ul class="list">
+            <li>
+              <a href="blog.html">Blog</a> — build logs, measurement notes, and
+              small experiments.
+            </li>
+            <li>
+              <a href="projects.html">Project write-ups</a> — deeper technical
+              details.
+            </li>
+            <li>
+              <a href="#">Selected papers (placeholder)</a> — PDFs and posters.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Call to action -->
+      <section aria-label="Contact CTA">
+        <div class="panel ringed">
+          <div class="row">
+            <div>
+              <h2>Let’s build something</h2>
+              <p class="lead">
+                Open to collaboration, internships, and research opportunities.
+              </p>
+            </div>
+            <div class="links">
+              <a
+                class="button button--primary"
+                href="mailto:maxnwider@gmail.com"
+                >Email me</a
+              >
+              <a class="button" href="resume.pdf" download>Resume</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="row" style="gap: 0.75rem">
+          <small
+            >© <span id="y">2025</span> Maximus Nwider. All rights
+            reserved.</small
+          >
+          <div class="links" style="gap: 0.9rem">
+            <a href="/privacy.html">Privacy</a>
+            <a href="/terms.html">Terms</a>
+            <a href="sitemap.xml">Sitemap</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+    <footer data-include></footer>
+</body>
+</html>

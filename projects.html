@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects — Maximus Nwider</title>
+    <meta
+      name="description"
+      content="All projects by Maximus Nwider with rich, categorized subsections and client-side filters."
+    />
+    <meta name="theme-color" content="#0b1020" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <style>
+      /* ===== Modern Palette & Tokens (match index/about) ===== */
+      :root {
+        --bg: #050814;
+        --bg-2: #0b1120;
+        --text: #e5eefb;
+        --muted: #94a3b8;
+        --brand: #7c3aed;
+        --brand-2: #22d3ee;
+        --brand-3: #06b6d4;
+        --ring: rgba(124, 58, 237, 0.35);
+        --radius: 18px;
+        --gap: 1.1rem;
+        --shadow-lg: 0 20px 60px rgba(2, 6, 23, 0.55);
+        --shadow-sm: 0 8px 24px rgba(2, 6, 23, 0.35);
+      }
+
+      /* ===== Base ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans";
+        background: radial-gradient(
+            1000px 600px at 10% -10%,
+            rgba(124, 58, 237, 0.22),
+            transparent
+          ),
+          radial-gradient(
+            1000px 500px at 110% 10%,
+            rgba(34, 211, 238, 0.18),
+            transparent
+          ),
+          linear-gradient(180deg, #04060f, #0a0f1e 20%, #050814 60%);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        width: min(1200px, 92vw);
+        margin-inline: auto;
+      }
+
+      /* ===== Helpers ===== */
+      .visually-hidden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap;
+      }
+      .ringed {
+        position: relative;
+      }
+      .ringed::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask: linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        padding: 1px;
+        pointer-events: none;
+        opacity: 0.75;
+      }
+
+      /* ===== Header / Nav ===== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 0;
+        backdrop-filter: saturate(1.1) blur(10px);
+        background: linear-gradient(
+          180deg,
+          rgba(11, 17, 32, 0.55),
+          rgba(11, 17, 32, 0.35)
+        );
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .logo {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        background: conic-gradient(
+          from 120deg,
+          var(--brand),
+          var(--brand-2),
+          var(--brand)
+        );
+        box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.15), var(--shadow-sm);
+      }
+      .nav ul {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav a {
+        color: var(--muted);
+        font-weight: 600;
+        padding: 0.45rem 0.7rem;
+        border-radius: 12px;
+        transition: color 0.2s, background 0.2s, transform 0.2s;
+      }
+      .nav a:hover,
+      .nav a[aria-current="page"] {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .nav a.cta {
+        color: #001;
+        background: linear-gradient(135deg, var(--brand-2), var(--brand));
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow-sm);
+      }
+      .nav a.cta:hover {
+        transform: translateY(-1px);
+      }
+
+      /* ===== Page Head ===== */
+      main {
+        padding-top: 2rem;
+      }
+      section {
+        padding: 3.2rem 0;
+      }
+      .panel {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: var(--radius);
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+      }
+      .eyebrow {
+        color: var(--brand-2);
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      h1 {
+        font-size: clamp(2rem, 3vw + 1rem, 3rem);
+        line-height: 1.1;
+        margin: 0.6rem 0 1rem;
+      }
+      .lead {
+        color: #c9d6ea;
+      }
+
+      /* ===== Filters ===== */
+      .filters {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .chip {
+        display: inline-flex;
+        gap: 0.4rem;
+        align-items: center;
+        padding: 0.42rem 0.7rem;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 999px;
+        font-size: 0.9rem;
+        color: #cfe4ff;
+        background: rgba(11, 17, 32, 0.5);
+        backdrop-filter: saturate(1.2) blur(2px);
+        cursor: pointer;
+        transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      }
+      .chip:hover {
+        transform: translateY(-1px);
+      }
+      .chip[data-active="true"] {
+        border-color: rgba(124, 58, 237, 0.6);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18) inset;
+      }
+      .search {
+        flex: 1;
+        min-width: 220px;
+      }
+      input[type="search"] {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+      }
+
+      /* ===== Grid / Cards ===== */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--gap);
+      }
+      .project {
+        grid-column: span 12;
+        border-radius: calc(var(--radius) + 1px);
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.045),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        transition: transform 0.22s ease, border-color 0.22s ease,
+          box-shadow 0.22s ease;
+      }
+      .project:hover {
+        transform: translateY(-2px);
+        border-color: rgba(124, 58, 237, 0.5);
+        box-shadow: 0 16px 50px rgba(2, 6, 23, 0.55);
+      }
+      .project .media {
+        position: relative;
+        aspect-ratio: 16/9;
+        background: #0c1428;
+      }
+      .project .media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          rgba(11, 17, 32, 0.65) 60%,
+          rgba(11, 17, 32, 0.9)
+        );
+        opacity: 0.8;
+      }
+      .project .body {
+        padding: 1rem;
+      }
+      .title {
+        font-weight: 900;
+        margin: 0 0 0.35rem;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .pill {
+        display: inline-block;
+        margin-right: 0.4rem;
+        padding: 0.25rem 0.55rem;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 999px;
+        font-size: 0.75rem;
+        color: #cbd5e1;
+      }
+      .links {
+        display: flex;
+        gap: 0.7rem;
+        align-items: center;
+      }
+      .links a {
+        color: var(--brand-2);
+        font-weight: 800;
+      }
+
+      /* ===== Subsections (per project) ===== */
+      .subsections {
+        margin-top: 0.8rem;
+        border-top: 1px dashed rgba(148, 163, 184, 0.2);
+        padding-top: 0.8rem;
+      }
+      .subgrid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: calc(var(--gap) * 0.9);
+      }
+      .subcard {
+        grid-column: span 12;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: 14px;
+        padding: 0.8rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .subcard:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 40px rgba(2, 6, 23, 0.45);
+      }
+      .subcard h4 {
+        margin: 0.1rem 0 0.45rem;
+        font-size: 1.02rem;
+        letter-spacing: 0.2px;
+      }
+      .subcard p {
+        margin: 0.1rem 0 0.5rem;
+        color: #d8e6ff;
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        column-gap: 0.6rem;
+        row-gap: 0.35rem;
+        font-size: 0.95rem;
+      }
+      .kv dt {
+        color: #cfe4ff;
+      }
+      .kv dd {
+        margin: 0;
+        color: #e9f1ff;
+      }
+
+      /* Toggle (expand/collapse) */
+      .toggle {
+        display: inline-flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 0.4rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .toggle svg {
+        width: 16px;
+        height: 16px;
+      }
+      .details {
+        display: none;
+      }
+      .project[aria-expanded="true"] .details {
+        display: block;
+      }
+
+      @media (min-width: 640px) {
+        .project {
+          grid-column: span 6;
+        }
+        .subcard {
+          grid-column: span 6;
+        }
+      }
+      @media (min-width: 1024px) {
+        .project {
+          grid-column: span 4;
+        }
+        .subcard {
+          grid-column: span 6;
+        }
+      }
+
+      /* ===== Footer / Focus ===== */
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 2rem 0 3rem;
+        color: var(--muted);
+      }
+      :focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+        border-radius: 10px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  <script type="module" src="/assets/js/main.js" defer></script>
+</head>
+  <body>
+  <header data-include></header>
+    <header>
+      <div class="container nav" role="navigation" aria-label="Primary">
+        <a href="index.html" class="brand" aria-label="Home">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Maximus&nbsp;Nwider</span>
+        </a>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html" aria-current="page">Projects</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html" class="cta">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="container">
+      <section aria-label="Heading">
+        <div class="panel ringed">
+          <div class="eyebrow">Projects</div>
+          <h1>All Projects</h1>
+          <p class="lead">
+            Browse everything I can share. Use filters to narrow by domain and
+            tooling.
+          </p>
+          <div class="filters" role="toolbar" aria-label="Project filters">
+            <button
+              class="chip"
+              data-filter="all"
+              data-active="true"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            <button class="chip" data-filter="embedded">Embedded</button>
+            <button class="chip" data-filter="rf">RF / EM</button>
+            <button class="chip" data-filter="vlsi">VLSI</button>
+            <button class="chip" data-filter="pcb">PCB</button>
+            <button class="chip" data-filter="software">Software</button>
+            <div class="search">
+              <label for="q" class="visually-hidden">Search projects</label>
+              <input
+                id="q"
+                type="search"
+                placeholder="Search by title, tags, or tools…"
+                aria-label="Search projects"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Project grid">
+        <div id="grid" class="grid">
+          <!-- ================= Existing Projects ================= -->
+          <!-- Wearable -->
+          <article
+            class="project"
+            data-tags="embedded pcb sensors"
+            data-area="embedded"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Allergy Smartwatch - PCB Design</h3>
+              <p class="meta">Altium · PCB · Sensors</p>
+              <p>Sensor fusion, BLE, power budgeting, and enclosure.</p>
+              <div>
+                <span class="pill">Altium</span><span class="pill">BLE</span
+                ><span class="pill">C</span>
+              </div>
+              <p class="links">
+                <a href="projects/wearable.html">Case study</a> ·
+                <a href="#">Repo</a>
+              </p>
+              <button
+                class="toggle"
+                type="button"
+                aria-controls="wearable-details"
+              >
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="wearable-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Architecture</h4>
+                    <p>
+                      Event-driven design with low-power sensor polling and BLE
+                      notifications.
+                    </p>
+                    <dl class="kv">
+                      <dt>MCU</dt>
+                      <dd>STM32L4 + custom HAL</dd>
+                      <dt>Sensors</dt>
+                      <dd>MAX30102/30205 + capacitive touch</dd>
+                      <dt>Power</dt>
+                      <dd>PMIC + 3.7V LiPo, 120mA peak</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Hardware</h4>
+                    <p>
+                      4-layer impedance-controlled stackup with stitched ground
+                      and guard traces.
+                    </p>
+                    <dl class="kv">
+                      <dt>PCB</dt>
+                      <dd>1.6mm FR-4, 50Ω microstrip</dd>
+                      <dt>RF</dt>
+                      <dd>Ceramic chip antenna with π-match</dd>
+                      <dt>Enclosure</dt>
+                      <dd>Printed resin + TPU strap</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Firmware</h4>
+                    <p>
+                      Interrupt-first drivers, DMA for sensors, and ring buffers
+                      for BLE packets.
+                    </p>
+                    <dl class="kv">
+                      <dt>OS</dt>
+                      <dd>Bare-metal (optional FreeRTOS)</dd>
+                      <dt>Tooling</dt>
+                      <dd>CubeMX, clang-format, unit tests</dd>
+                      <dt>Updates</dt>
+                      <dd>UART bootloader</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Testing & Results</h4>
+                    <p>
+                      Battery life &gt;36h typical; BLE latency &lt; 30ms;
+                      optical PPG validated on bench.
+                    </p>
+                    <dl class="kv">
+                      <dt>Scripts</dt>
+                      <dd>Python + CSV logging</dd>
+                      <dt>Plots</dt>
+                      <dd>Matplotlib dashboards</dd>
+                      <dt>Compliance</dt>
+                      <dd>Pre-scan EMI check</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SRAM -->
+          <article
+            class="project"
+            data-tags="vlsi hspice python"
+            data-area="vlsi"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">FinFET SRAM Sense-Amp Exploration</h3>
+              <p class="meta">VLSI · HSPICE · Python</p>
+              <p>Margin vs. PDP across process corners with Monte Carlo.</p>
+              <div>
+                <span class="pill">PTM-MG</span
+                ><span class="pill">7/14/20 nm</span
+                ><span class="pill">Automation</span>
+              </div>
+              <p class="links">
+                <a href="projects/sram-senseamp.html">Read more</a> ·
+                <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="sram-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="sram-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Modeling</h4>
+                    <p>
+                      PTM-MG FinFET corners with temperature and V<sub>DD</sub>
+                      sweeps.
+                    </p>
+                    <dl class="kv">
+                      <dt>Nodes</dt>
+                      <dd>7nm · 14nm · 20nm</dd>
+                      <dt>Runs</dt>
+                      <dd>1k Monte Carlo / corner</dd>
+                      <dt>Metrics</dt>
+                      <dd>PDP, offset, yield</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Circuits</h4>
+                    <p>Dual-tail latch with offset cancellation variants.</p>
+                    <dl class="kv">
+                      <dt>Bitline</dt>
+                      <dd>Cap loading & skew</dd>
+                      <dt>Sense</dt>
+                      <dd>Timing window tuning</dd>
+                      <dt>Assist</dt>
+                      <dd>WL/BL assist options</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Automation</h4>
+                    <p>
+                      Python driver generates decks, runs HSPICE, parses, and
+                      plots.
+                    </p>
+                    <dl class="kv">
+                      <dt>Tooling</dt>
+                      <dd>HSPICE + pandas</dd>
+                      <dt>Batch</dt>
+                      <dd>GNU parallel</dd>
+                      <dt>Docs</dt>
+                      <dd>Auto LaTeX report</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Findings</h4>
+                    <p>
+                      Trade-off curve highlights optimal bias for target BER at
+                      each node.
+                    </p>
+                    <dl class="kv">
+                      <dt>Best PDP</dt>
+                      <dd>7nm at mid-V<sub>DD</sub></dd>
+                      <dt>Yield</dt>
+                      <dd>&gt;= 99.5% across ±3σ</dd>
+                      <dt>Next</dt>
+                      <dd>Layout-aware sims</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Horn -->
+          <article
+            class="project"
+            data-tags="rf em hfss"
+            data-area="rf"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Corrugated Horn &amp; Feed Network</h3>
+              <p class="meta">RF / EM · HFSS</p>
+              <p>Parametric horn with measured vs. simulated performance.</p>
+              <div>
+                <span class="pill">HFSS</span><span class="pill">MATLAB</span
+                ><span class="pill">7–8 GHz</span>
+              </div>
+              <p class="links">
+                <a href="projects/horn.html">Overview</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="horn-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="horn-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Geometry</h4>
+                    <p>
+                      Scriptable corrugations and flare profile with DXF export.
+                    </p>
+                    <dl class="kv">
+                      <dt>Type</dt>
+                      <dd>Conical corrugated</dd>
+                      <dt>Feeds</dt>
+                      <dd>WR-112 transition</dd>
+                      <dt>Profile</dt>
+                      <dd>Custom taper</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Simulation</h4>
+                    <p>
+                      HFSS param sweeps with goal-seeking on cross-pol
+                      isolation.
+                    </p>
+                    <dl class="kv">
+                      <dt>S-params</dt>
+                      <dd>|S11| &lt; −15 dB</dd>
+                      <dt>Isolation</dt>
+                      <dd>&lt; −30 dB</dd>
+                      <dt>Mesh</dt>
+                      <dd>Auto-adaptive</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Fabrication</h4>
+                    <p>
+                      Turned aluminum with post-machining anodize; jigged
+                      alignment.
+                    </p>
+                    <dl class="kv">
+                      <dt>Tolerances</dt>
+                      <dd>±0.05 mm</dd>
+                      <dt>Finish</dt>
+                      <dd>Hard anodize</dd>
+                      <dt>Connector</dt>
+                      <dd>SMA / waveguide</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Measurement</h4>
+                    <p>
+                      Anechoic range sweep; results matched simulation within
+                      2–3 dB.
+                    </p>
+                    <dl class="kv">
+                      <dt>Setup</dt>
+                      <dd>VNA + turntable</dd>
+                      <dt>Cal</dt>
+                      <dd>TRL / SOLT</dd>
+                      <dt>Plots</dt>
+                      <dd>Polar & gain vs. f</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Toolkit -->
+          <article
+            class="project"
+            data-tags="software viz python"
+            data-area="software"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Allergy Smartwatch - Graphical RTOS</h3>
+              <p class="meta">Firmware · C</p>
+              <p>Reusable charts and pipelines for lab data analysis.</p>
+              <div>
+                <span class="pill">Embedded</span
+                ><span class="pill">MCU</span
+         
+              </div>
+              <p class="links"><a href="#">Docs</a> · <a href="#">Repo</a></p>
+              <button class="toggle" type="button" aria-controls="viz-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="viz-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Architecture</h4>
+                    <p>
+                      Composable pipeline with lazy transforms and pluggable
+                      exporters.
+                    </p>
+                    <dl class="kv">
+                      <dt>Core</dt>
+                      <dd>Dataset → Transform → Chart</dd>
+                      <dt>Config</dt>
+                      <dd>YAML + CLI flags</dd>
+                      <dt>Cache</dt>
+                      <dd>Hash-based artifacts</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Charts</h4>
+                    <p>
+                      Time-series, histograms, FFTs, and multi-axis layouts.
+                    </p>
+                    <dl class="kv">
+                      <dt>Library</dt>
+                      <dd>Matplotlib</dd>
+                      <dt>Templates</dt>
+                      <dd>Dark/Light presets</dd>
+                      <dt>Export</dt>
+                      <dd>PNG/SVG/PDF</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Data IO</h4>
+                    <p>CSV/Parquet ingest with schema hints and validators.</p>
+                    <dl class="kv">
+                      <dt>Readers</dt>
+                      <dd>CSV · Parquet · JSON</dd>
+                      <dt>Validate</dt>
+                      <dd>Pydantic models</dd>
+                      <dt>CLI</dt>
+                      <dd>Argparse + subcommands</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Examples</h4>
+                    <p>
+                      Battery discharge analysis, RF sweep plots, sensor fusion
+                      traces.
+                    </p>
+                    <dl class="kv">
+                      <dt>Notebooks</dt>
+                      <dd>Jupyter demos</dd>
+                      <dt>CI</dt>
+                      <dd>Pre-commit checks</dd>
+                      <dt>Docs</dt>
+                      <dd>mkdocs-material</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PMIC -->
+          <article
+            class="project"
+            data-tags="pcb power analog"
+            data-area="pcb"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">32-Bit x86 Multithreaded Kernel</h3>
+              <p class="meta">PCB · Power · Analog</p>
+              <p>Multi-rail power with careful layout and measurement.</p>
+              <div>
+                <span class="pill">OS</span
+                ><span class="pill">Firmware</span><span class="pill">EMI</span>
+              </div>
+              <p class="links"><a href="#">Notes</a> · <a href="#">Repo</a></p>
+              <button class="toggle" type="button" aria-controls="pmic-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="pmic-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Power Tree</h4>
+                    <p>
+                      Sequenced rails for MCU, RF, and sensors with soft-start.
+                    </p>
+                    <dl class="kv">
+                      <dt>Rails</dt>
+                      <dd>3V3 · 2V8 · 1V8</dd>
+                      <dt>Control</dt>
+                      <dd>EN pins + GPIO</dd>
+                      <dt>Budget</dt>
+                      <dd>Idle 2.8mA</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Layout</h4>
+                    <p>
+                      Star grounds, short switch loops, and stitched planes.
+                    </p>
+                    <dl class="kv">
+                      <dt>Layering</dt>
+                      <dd>4-layer, solid GND</dd>
+                      <dt>Clearance</dt>
+                      <dd>High-dv/dt zones</dd>
+                      <dt>Probing</dt>
+                      <dd>Kelvin test pads</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Analog</h4>
+                    <p>
+                      ADC front-end anti-alias and RC filtering for sensor
+                      rails.
+                    </p>
+                    <dl class="kv">
+                      <dt>Noise</dt>
+                      <dd>&lt; 8 µV RMS</dd>
+                      <dt>Ripple</dt>
+                      <dd>&lt; 10 mV p-p</dd>
+                      <dt>BW</dt>
+                      <dd>Up to 10 kHz</dd>
+                    </dl>
+                  </div>
+                  <div class="subcard">
+                    <h4>Validation</h4>
+                    <p>Scope captures and ENOB estimates across load steps.</p>
+                    <dl class="kv">
+                      <dt>EMI</dt>
+                      <dd>Pre-scan pass</dd>
+                      <dt>Thermals</dt>
+                      <dd>ΔT &lt; 20 °C</dd>
+                      <dt>Docs</dt>
+                      <dd>Annotated plots</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ================= New Placeholder Projects ================= -->
+
+          <!-- Placeholder 1 -->
+          <article
+            class="project"
+            data-tags="embedded tbd"
+            data-area="embedded"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Microwave Circuit Design (ADS)</h3>
+              <p class="meta">Embedded · TBD</p>
+              <p>Coming soon. High-level concept and assets pending.</p>
+              <div>
+                <span class="pill"> Keysight ADS</span><span class="pill">MCU</span>
+              </div>
+              <p class="links">
+                <a href="#">Case study</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="ph1-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph1-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Architecture</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Hardware</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Firmware</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Testing</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 2 -->
+          <article
+            class="project"
+            data-tags="rf antenna tbd"
+            data-area="rf"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">RF Project — Placeholder</h3>
+              <p class="meta">RF / EM · TBD</p>
+              <p>Coming soon. Design notes and measurements to follow.</p>
+              <div>
+                <span class="pill">HFSS</span><span class="pill">TBD</span>
+              </div>
+              <p class="links">
+                <a href="#">Overview</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="ph2-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph2-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Geometry</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Simulation</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Fabrication</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Measurement</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 3 -->
+          <article
+            class="project"
+            data-tags="vlsi spice tbd"
+            data-area="vlsi"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">VLSI Project — Placeholder</h3>
+              <p class="meta">VLSI · TBD</p>
+              <p>Coming soon. SPICE decks and plots in progress.</p>
+              <div>
+                <span class="pill">HSPICE</span><span class="pill">TBD</span>
+              </div>
+              <p class="links">
+                <a href="#">Read more</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="ph3-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph3-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Modeling</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Circuits</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Automation</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Findings</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 4 -->
+          <article
+            class="project"
+            data-tags="pcb layout tbd"
+            data-area="pcb"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">PCB Project — Placeholder</h3>
+              <p class="meta">PCB · TBD</p>
+              <p>Coming soon. Layout screenshots and validation planned.</p>
+              <div>
+                <span class="pill">Altium</span><span class="pill">TBD</span>
+              </div>
+              <p class="links"><a href="#">Notes</a> · <a href="#">Repo</a></p>
+              <button class="toggle" type="button" aria-controls="ph4-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph4-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Power Tree</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Layout</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Analog</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Validation</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 5 -->
+          <article
+            class="project"
+            data-tags="software cli tbd"
+            data-area="software"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Software Project — Placeholder</h3>
+              <p class="meta">Software · TBD</p>
+              <p>Coming soon. API surface and docs under construction.</p>
+              <div>
+                <span class="pill">Python</span><span class="pill">TBD</span>
+              </div>
+              <p class="links"><a href="#">Docs</a> · <a href="#">Repo</a></p>
+              <button class="toggle" type="button" aria-controls="ph5-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph5-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Architecture</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Features</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Data IO</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Examples</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 6 -->
+          <article
+            class="project"
+            data-tags="embedded sensors tbd"
+            data-area="embedded"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Embedded Project — Placeholder II</h3>
+              <p class="meta">Embedded · TBD</p>
+              <p>Coming soon. Prototyping and bring-up in progress.</p>
+              <div>
+                <span class="pill">RTOS</span><span class="pill">TBD</span>
+              </div>
+              <p class="links">
+                <a href="#">Case study</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="ph6-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph6-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Architecture</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Hardware</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Firmware</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Testing</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 7 -->
+          <article
+            class="project"
+            data-tags="rf filter tbd"
+            data-area="rf"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">RF Project — Placeholder II</h3>
+              <p class="meta">RF / EM · TBD</p>
+              <p>Coming soon. Filter topologies under evaluation.</p>
+              <div>
+                <span class="pill">ADS</span><span class="pill">TBD</span>
+              </div>
+              <p class="links">
+                <a href="#">Overview</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="ph7-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph7-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Topology</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Simulation</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Build</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Results</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 8 -->
+          <article
+            class="project"
+            data-tags="vlsi layout tbd"
+            data-area="vlsi"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">VLSI Project — Placeholder II</h3>
+              <p class="meta">VLSI · TBD</p>
+              <p>Coming soon. Layout-aware experiments planned.</p>
+              <div>
+                <span class="pill">Cadence</span><span class="pill">TBD</span>
+              </div>
+              <p class="links">
+                <a href="#">Read more</a> · <a href="#">Repo</a>
+              </p>
+              <button class="toggle" type="button" aria-controls="ph8-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph8-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Spec</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Blocks</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Flow</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Validation</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 9 -->
+          <article
+            class="project"
+            data-tags="software web tbd"
+            data-area="software"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">Software Project — Placeholder II</h3>
+              <p class="meta">Software · TBD</p>
+              <p>Coming soon. UI mockups and API wiring next.</p>
+              <div>
+                <span class="pill">TypeScript</span
+                ><span class="pill">TBD</span>
+              </div>
+              <p class="links"><a href="#">Docs</a> · <a href="#">Repo</a></p>
+              <button class="toggle" type="button" aria-controls="ph9-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph9-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Architecture</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Features</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Data IO</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Examples</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder 10 -->
+          <article
+            class="project"
+            data-tags="pcb power tbd"
+            data-area="pcb"
+            aria-expanded="false"
+          >
+            <div class="media"></div>
+            <div class="body">
+              <h3 class="title">PCB Project — Placeholder II</h3>
+              <p class="meta">PCB · TBD</p>
+              <p>Coming soon. Power integrity and EMI work ahead.</p>
+              <div>
+                <span class="pill">KiCad</span><span class="pill">TBD</span>
+              </div>
+              <p class="links"><a href="#">Notes</a> · <a href="#">Repo</a></p>
+              <button class="toggle" type="button" aria-controls="ph10-details">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Details
+              </button>
+              <div id="ph10-details" class="details subsections">
+                <div class="subgrid">
+                  <div class="subcard">
+                    <h4>Power Tree</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Layout</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Analog</h4>
+                    <p>TBD</p>
+                  </div>
+                  <div class="subcard">
+                    <h4>Validation</h4>
+                    <p>TBD</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small
+          >© <span id="y">2025</span> Maximus Nwider. All rights
+          reserved.</small
+        >
+      </div>
+    </footer>
+
+    <script>
+      // Helpers
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+      const chips = $$(".chip");
+      const grid = $("#grid");
+      const cards = $$(".project", grid);
+      const q = $("#q");
+
+      function applyFilters() {
+        const active = chips.find((c) => c.dataset.active === "true");
+        const area = active ? active.dataset.filter : "all";
+        const query = (q?.value || "").trim().toLowerCase();
+        cards.forEach((card) => {
+          const matchesArea = area === "all" || card.dataset.area === area;
+          const text = (card.textContent || "").toLowerCase();
+          const matchesText = !query || text.includes(query);
+          card.style.display = matchesArea && matchesText ? "" : "none";
+        });
+      }
+
+      chips.forEach((chip) =>
+        chip.addEventListener("click", () => {
+          chips.forEach((c) => {
+            c.dataset.active = "false";
+            c.setAttribute("aria-pressed", "false");
+          });
+          chip.dataset.active = "true";
+          chip.setAttribute("aria-pressed", "true");
+          applyFilters();
+        })
+      );
+
+      q?.addEventListener("input", applyFilters);
+
+      // Expand/Collapse per-project subsections
+      function wireToggles(scope = document) {
+        scope.querySelectorAll(".toggle").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const article = btn.closest(".project");
+            const expanded = article.getAttribute("aria-expanded") === "true";
+            article.setAttribute("aria-expanded", expanded ? "false" : "true");
+            const svg = btn.querySelector("svg");
+            svg.style.transform = expanded ? "rotate(0deg)" : "rotate(180deg)";
+            svg.style.transition = "transform .2s ease";
+          });
+        });
+      }
+      wireToggles();
+
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+    <footer data-include></footer>
+</body>
+</html>
