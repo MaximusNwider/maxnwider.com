@@ -2,4 +2,8 @@
 
 Serve with any static server, e.g. `python -m http.server -d website 8000`.
 
+# Sample of my Home Page:
+![alt text](/home/maximus-nwider/Pictures/Screenshots/HomePage_sample.png)
+
+
 
