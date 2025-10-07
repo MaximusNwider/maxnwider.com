@@ -2,7 +2,7 @@
 
 Serve with any static server, e.g. `python -m http.server -d website 8000`.
 
-## Sample of my Home Page
+## Preview of my Home Page
 ![alt text](assets/img/HomePage_sample.png)
 
 
